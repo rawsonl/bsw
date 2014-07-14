@@ -21,7 +21,8 @@
     "karma-ie-launcher": "^0.1.5",
     "karma-jasmine": "^0.2.2",
     "karma-phantomjs-launcher": "^0.1.4",
-    "karma-safari-launcher": "^0.1.1"
+    "karma-safari-launcher": "^0.1.1",
+    "less": "^1.7.3"
   },
   "scripts": {
     "test": "karma start ./tests/config.js"

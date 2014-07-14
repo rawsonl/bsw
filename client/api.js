@@ -1,6 +1,6 @@
 var moduleName = 'bigSexyWords',
 	// applicationModules = _.map(['controllers', 'directives', 'filters', 'services'], function (name) {
-	applicationModules = _.map(['controllers'], function (name) {
+	applicationModules = _.map(['controllers', 'directives', 'filters', 'services'], function (name) {
 	    return "bigSexyWords." + name;
 	}), 
 	vendorDependencies = [], 
@@ -19,6 +19,10 @@ clientModule.config(function main($routeProvider, $locationProvider, $httpProvid
     $locationProvider.html5Mode(true);
 
     $routeProvider.when('/', {
+        controller: 'customerController',
+        templateUrl: '/markup/pages/customer.html'
+    });
+    $routeProvider.when('/customer', {
         controller: 'customerController',
         templateUrl: '/markup/pages/customer.html'
     });
