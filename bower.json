@@ -1,0 +1,28 @@
+{
+  "name": "BigSexyWords",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rawsonl/bsw",
+  "authors": [
+    "Linda Rawson <linda.rawson@gmail.com>",
+    "David Kleriga <david@citizendish.com>"
+  ],
+  "license": "private",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.20",
+    "angular-mocks": "~1.2.20",
+    "angular-route": "~1.2.20",
+    "jquery": "~2.1.1",
+    "modernizr": "~2.8.3",
+    "string": "~1.9.0",
+    "underscore": "~1.6.0"
+  }
+}
