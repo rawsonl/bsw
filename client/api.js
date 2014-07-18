@@ -37,6 +37,11 @@ clientModule.config(function main($routeProvider, $locationProvider, $httpProvid
         templateUrl: '/markup/pages/arbitration.html'
     });
 
+    $routeProvider.when('/registration', {
+        controller: 'registrationController',
+        templateUrl: '/markup/pages/registration.html'
+    });
+
     $routeProvider.otherwise({ redirectTo: '/' });
 
 });

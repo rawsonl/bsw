@@ -1,0 +1,65 @@
+<article id='registration-workflow'>
+
+	<h6>registration workflow</h6>
+	
+
+	<hr />
+
+	<fieldset>
+
+		<legend>registration</legend>
+
+		<h4>{{messages.userType}}</h4>
+
+		<div class='radio-group'>
+
+			<div class='radio-option'>
+				<label>customer</label>
+				<input type='radio' name='user-type' value='customer'
+					ng-model='user.type' />
+			</div>
+
+			<div class='radio-option'>
+				<label>writer</label>
+				<input type='radio' name='user-type' value='writer'
+					ng-model='user.type' />
+			</div>
+
+		</div>
+
+
+		<h4>{{messages.loginType}}</h4>
+
+		<div id='one-all'>
+
+		</div>
+
+
+		<hr />
+		<label>or</label>
+		<hr />
+
+		<div class='field'>
+			<label>email</label>
+			<input type='email'
+				ng-model='user.email' />
+		</div>
+
+		<div class='field'>
+			<label>password</label>
+			<input type='password'
+				ng-model='user.password' />
+		</div>
+
+		<div class='field'>
+			<label>confirm password</label>
+			<input type='password'
+				ng-model='user.confirmPassword' />
+		</div>
+
+		<button 
+			ng-click='register()'>register</button>
+
+
+	</fieldset>
+</article>

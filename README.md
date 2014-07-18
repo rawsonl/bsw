@@ -18,6 +18,7 @@ karma start ./tests/config.js
 Initial project setup on terminal
 
 All dependencies, trigger builds ( client, server, stylesheets)
+
 make 
 
 Server/Client dependencies

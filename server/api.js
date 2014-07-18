@@ -17,6 +17,7 @@ function setupApplication(application){
 	var server = http.createServer(application);
 
     // application.use(express.cookieParser());
+    application.use(bodyParser.urlencoded());
     application.use(bodyParser.json());
     application.use(cookieParser('secret-string'));
 	application.use(express.static(path.join(__dirname, '..')));
@@ -35,6 +36,15 @@ function setupApplication(application){
 }
 
 function setupRoutes(application){
+
+    application.post('/social-login', function(request, response){
+        var oneAllData = request.body,
+            connectionToken = oneAllData.connection_token;
+
+        console.log('connection token', connectionToken);
+
+        response.redirect('/customer');
+    })
 
 	application.get(/\/[\w\/\-]*$/, function(request, response){
         response.sendfile(path.join(__dirname, '..', 'index.html'));
