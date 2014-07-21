@@ -7,7 +7,6 @@ function service( $window, $http, applicationConfigurationService ){
 			var _oneall = $window._oneall || [],
 				callbackUri = applicationConfigurationService.socialLoginCallbackUri;
 
-			console.log('setting up social login', callbackUri, domID, _oneall)
 
 			_oneall.push(['social_login', 'set_callback_uri', '//' + callbackUri]);
 			_oneall.push(['social_login', 'set_providers', ['facebook', 'google', 'linkedin', 'twitter']]);
