@@ -40,7 +40,9 @@ exports.Schema = new (mongoose.Schema)({
 	id: { type: String },
 	email: { type: String, required: true },
 	password: { type: String, required: true, validate: passwordValidation },
-	userToken: { type: String, required: false }
+	linkedinToken: { type: String, required: false },
+	facebookToken: { type: String, required: false },
+	twitterToken: { type: String, required: false },
 });
 
 exports.Model = function(){ return mongoose.model('User', exports.Schema); }
@@ -140,6 +142,33 @@ exports.create = function(userData){ //mysql
 	return createNewUser.promise;
 }
 
+exports.findByCredentials = function(credentials){
+	var findUser = $q.defer(),
+		User = exports.Model();
+
+	if ( !!credentials && credentials.email && credentials.password ) {
+		var hashedCredentials = {
+			email: credentials.email,
+			password: exports.hashPassword(credentials.password)
+		};
+		User.find(hashedCredentials)
+			.exec(function(error, results){
+				if ( error ) {
+					findUser.reject(error);
+				} else if (results.length == 0 ){
+					findUser.reject({ message: 'not-found'})
+				} 
+				else {
+					var user = results[0];
+					findUser.resolve(user);
+				}
+			})
+	} else {
+		findUser.reject(false);
+	}
+	return findUser.promise;
+}
+
 exports.findFromConnectionToken = function(connectionToken){
 
 	console.log('finding from connection token ' , connectionToken );
@@ -176,5 +205,26 @@ exports.findBSWUserFromSocialUser = function(socialUser){
 		})
 
 	return findUser.promise;
+}
+
+exports.linkBSWUserWithSocialUser = function(bswUser, socialUser){
+	var User = exports.Model(),
+		linkUsers = $q.defer(),
+		socialToken = {};
+
+	socialToken[socialUser.identity.provider + 'Token'] = socialUser.user_token;
+
+	User.update(bswUser, _.extend(bswUser, socialToken ))
+		.exec(function(error, results){
+			if ( error ) {
+				console.error('something went wrong linking users', error );
+				linkUsers.reject(error);
+			} else {
+				console.log('finished linking bsw user with social token', results);
+				linkUsers.resolve(results);
+			}
+		})
+
+	return linkUsers.promise;
 }
 
