@@ -38,8 +38,8 @@ function passwordValidation(password, done){
 
 exports.Schema = new (mongoose.Schema)({
 	id: { type: String },
-	email: { type: String, required: true },
-	password: { type: String, required: true, validate: passwordValidation },
+	email: { type: String, required: false },
+	password: { type: String, required: false, validate: passwordValidation },
 	linkedinToken: { type: String, required: false },
 	facebookToken: { type: String, required: false },
 	twitterToken: { type: String, required: false },
@@ -55,7 +55,7 @@ exports.Schema.pre('save', function(next) {
 });
 
 exports.Schema.post('validate', function(user){
-
+	if ( !user.password || user.password == '' ) return false;
 	user.password = exports.hashPassword(user.password);
 })
 
@@ -77,41 +77,33 @@ exports.all = function(){
 	var UserModel = exports.Model(),
 		fetchUsers = $q.defer();
 
-	// UserModel.find()
-	// 	.exec(function(error, results){
-	// 		if ( error ) {
-	// 			console.error('error fetching all users', error );
-	// 			fetchUsers.reject(error);
-	// 		} else {
-	// 			console.log('all users', results);
-	// 			fetchUsers.resolve(results);
-	// 		}
-	// 	})
+	UserModel.find()
+		.exec(function(error, results){
+			if ( error ) {
+				console.error('error fetching all users', error );
+				fetchUsers.reject(error);
+			} else {
+				console.log('all users', results);
+				fetchUsers.resolve(results);
+			}
+		})
 
-	// mysqlConnection.connect();
-	// mysqlConnection.query('select * from USERS', function(error, rows, fields){
-	// 	if ( error ) {
-	// 		fetchUsers.reject(error);
-	// 	}
-	// 	else {
-	// 		fetchUsers.resolve(rows);
-	// 	}
-	// })
-
-	MySQLManager.selectModel('USERS', {})
-		.then(fetchUsers.resolve, fetchUsers.reject);
+	// MySQLManager.selectModel('USERS', {})
+	// 	.then(fetchUsers.resolve, fetchUsers.reject);
 
 	fetchUsers.promise
 		.then(function(users){
 			console.log('all users', users);
+			return users;
 		}, function(error){
 			console.error('all users error', error);
+			return error;
 		})
 
 	return fetchUsers.promise;
 }
 
-exports.create = function(userData){ //mysql
+exports.create = function(userData){ 
 
 	var UserModel = exports.Model(),
 		createNewUser = $q.defer();
@@ -135,11 +127,27 @@ exports.create = function(userData){ //mysql
 	createNewUser.promise
 		.then(function(user){
 			console.log('created new user', user);
+			return user;
 		}, function(error){
 			console.error('create new user error', error );
+			return error;
 		})
 
 	return createNewUser.promise;
+}
+
+exports.createFromConnectionToken = function(connectionToken){
+	return OneAll.lookupConnectionToken(connectionToken)
+		.then(exports.createFromSocialUser);
+}
+
+exports.createFromSocialUser = function(socialUser) {
+	var bswUser = {};
+
+	bswUser[socialUser.identity.provider + 'Token'] = socialUser.user_token;
+
+	return exports.create(bswUser);
+
 }
 
 exports.findByCredentials = function(credentials){

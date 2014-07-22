@@ -22,7 +22,7 @@ function controller($scope, oneAllService, $window){
 	})
 
 	setTimeout(function(){
-		oneAllService.setupSocialLogin('one-all');
+		oneAllService.setupSocialRegistration('one-all');
 		console.log('_oneall', $window._oneall, window._oneall);
 	}, 1000);
 

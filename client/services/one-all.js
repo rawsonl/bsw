@@ -3,6 +3,16 @@
 function service( $window, $http, applicationConfigurationService ){
 
 	return {
+		setupSocialRegistration: function(domID){
+			var _oneall = $window._oneall || [],
+				callbackUri = applicationConfigurationService.socialRegistrationCallbackUri;
+
+
+			_oneall.push(['social_login', 'set_callback_uri', '//' + callbackUri]);
+			_oneall.push(['social_login', 'set_providers', ['facebook', 'google', 'linkedin', 'twitter']]);
+			_oneall.push(['social_login', 'do_render_ui', domID]);
+
+		},
 		setupSocialLogin: function(domID){
 			var _oneall = $window._oneall || [],
 				callbackUri = applicationConfigurationService.socialLoginCallbackUri;
