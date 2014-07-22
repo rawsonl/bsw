@@ -2,22 +2,34 @@ var encryption = require('../security/encryption'),
 	OneAll = require('../services/one-all'),
 	mongoose = require('mongoose'),
 	mysql = require('mysql'),
+	MySQLManager = require('./mysql-manager'),
 	$q = require('q');
 
 
 
 mongoose.connect('mongodb://localhost/test');
 
+// var mysqlConnection = mysql.createConnection({
+// 	host: 'localhost',
+// 	user: '',
+// 	password: '',
+// 	database: 'test',
+
+// 	connectTimeout: 5000
+// })
+
 var mysqlConnection = mysql.createConnection({
-	host: 'localhost',
-	user: '',
-	password: '',
-	database: 'test',
+	host: '181.224.136.124',
+	user: 'bigsexyw_bswdb',
+	password: 'CL@w642b',
+	database: 'bigsexyw_bswdb',
+
+	insecureAuth: true,
 
 	connectTimeout: 5000
 })
 
-mysqlConnection.connect();
+// mysqlConnection.connect();
 
 function passwordValidation(password, done){
 	console.log('validating password', password);
@@ -60,56 +72,70 @@ exports.hashPassword = function(password){
 }
 
 exports.all = function(){
-	var fetchUsers = $q.defer();
+	var UserModel = exports.Model(),
+		fetchUsers = $q.defer();
 
-	mysqlConnection.query('select * from users', function(error, rows, fields){
-		if ( error ) {
-			console.error('all users error', error );
-			fetchUsers.reject(error);
-		}
-		else {
-			console.log('all users', rows, fields);
-			fetchUsers.resolve(rows);
-		}
-	})
+	// UserModel.find()
+	// 	.exec(function(error, results){
+	// 		if ( error ) {
+	// 			console.error('error fetching all users', error );
+	// 			fetchUsers.reject(error);
+	// 		} else {
+	// 			console.log('all users', results);
+	// 			fetchUsers.resolve(results);
+	// 		}
+	// 	})
+
+	// mysqlConnection.connect();
+	// mysqlConnection.query('select * from USERS', function(error, rows, fields){
+	// 	if ( error ) {
+	// 		fetchUsers.reject(error);
+	// 	}
+	// 	else {
+	// 		fetchUsers.resolve(rows);
+	// 	}
+	// })
+
+	MySQLManager.selectModel('USERS', {})
+		.then(fetchUsers.resolve, fetchUsers.reject);
+
+	fetchUsers.promise
+		.then(function(users){
+			console.log('all users', users);
+		}, function(error){
+			console.error('all users error', error);
+		})
 
 	return fetchUsers.promise;
 }
 
 exports.create = function(userData){ //mysql
 
-	var createNewUser = $q.defer();
-
-	mysqlConnection.query('insert into users set ?', userData, function(error, result){
-		if ( error ) { 
-			console.error('error inserting user',error, userData);
-			createNewUser.reject(error);
-		}
-		else {
-			console.log('creating user', result);
-			createNewUser.resolve(result);
-		}
-	})
-
-	return createNewUser.promise;
-}
-
-exports.createNew = function(userData){ //mongodb
 	var UserModel = exports.Model(),
 		createNewUser = $q.defer();
 
-	console.log('user data new', userData);
-
 	UserModel.create(userData, function(error, user){
-		if ( error ) { 
-			console.error('error saving new user', error);
-			createNewUser.reject(error);
-		}
-		else {
-			console.log('save has been successful', user);
-			createNewUser.resolve(user);
-		}
+		if ( error ) createNewUser.reject(error);
+		else createNewUser.resolve(user);
 	})
+
+	// mysqlConnection.query('insert into users set ?', userData, function(error, result){
+	// 	if ( error ) { 
+	// 		console.error('error inserting user',error, userData);
+	// 		createNewUser.reject(error);
+	// 	}
+	// 	else {
+	// 		console.log('creating user', result);
+	// 		createNewUser.resolve(result);
+	// 	}
+	// })
+
+	createNewUser.promise
+		.then(function(user){
+			console.log('created new user', user);
+		}, function(error){
+			console.error('create new user error', error );
+		})
 
 	return createNewUser.promise;
 }
@@ -130,15 +156,21 @@ exports.findBSWUserFromSocialUser = function(socialUser){
 	console.log('finding user from social account', socialUser);
 
 	var User = exports.Model(),
-		findUser = $q.defer();
+		findUser = $q.defer(),
 
-	User.find()
+		conditions = {};
+
+	conditions[socialUser.identity.provider + 'Token'] = socialUser.user_token;
+
+	console.log('conditions', conditions);
+
+	User.find(conditions)
 		.exec(function(error, results){
 			if ( error ) {
 				console.error('something went wrong', error);
 				findUser.reject(results);
 			} else {
-				console.log(results);
+				console.log('finding bsw user from social user', results);
 				findUser.resolve(results);
 			}
 		})

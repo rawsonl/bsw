@@ -1,11 +1,9 @@
 var $q = require('q'),
 	requestLibrary = require('request'),
-	socialApiUrl = 'https://citizendish.api.oneall.com/',
+	socialApiUrl = 'https://bigsexywords.api.oneall.com/',
 	auth = {
-		user: '5a62c4fc-6fba-4dfe-8445-2da5f1c32b0c',
-		pass: '0c344ce4-c3ea-447d-8242-d28545939e40',
-		// user: '',
-		// pass: '',
+		user: '7f80c397-d591-4fa8-a491-7e7ed8140e6b',
+		pass: 'ae921c4a-c96b-4837-aa94-dbce805aac54',
 		sendImmediately: true
 	};
 
@@ -21,8 +19,9 @@ function getUserFromConnectionToken(connectionToken) {
 			}, 
 
 			function(error, apiResponse, data ) {
-				console.log('api response', apiResponse, data);
-				if ( error || !!data) {
+				// console.log('api response', data);
+				// console.log('api response', apiResponse, data);
+				if ( error || !data) {
 					return fetchUserToken.reject(error);
 				}
 				var jsonData = JSON.parse(data).response,
