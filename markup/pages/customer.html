@@ -1,13 +1,90 @@
 <article id='customer-workflow'>
 
-	<h6>customer workflow</h6>
+	<h6>Customer Dashboard</h6>
+
+	<div class="red">
+	<ul>
+		<ol>If the user is logged in their information should be displayed here.</ol>
+		<ol>If the user is not logged in they should be returned to the login screen.</ol>
+		<ol>Projects move within the following statuses:
+		Initial, Assigning Writers, In Process, Ready for Review, Respond to Question(s), Respond to Arbitration, Complete</ol>
+	</ul>
+
+	<ul class='simple-nav'>
+            <li><a href='/customer'>Home</a></li>
+            <li><a href='/userprofile'>My Profile</a></li>
+            <li><a href='/account'>My Account</a></li>
+    </ul>
 
 	<h3>{{customer.status}}</h3>
 
-	<hr />
+	<h2>Projects</h2>
 
-	<button 
-		ng-click='resolve()'>resolve</button>
+	<div class='dashboard-button'><a href='/openprojects'>In Progress</a></div>
+	<div class='dashboard-button'><a href='/projectaction'>Need Action</a></div>
+	<div class='dashboard-button'><a href='/createproject'>Create</a></div>
+	<div class='dashboard-button'><a href='/completedprojects'>Completed</a></div>
+	<div class='dashboard-button'><a href='/searchprojects'>Search</a></div>
 
 
-</article>
+	<h2>In Progress</h2>
+	<div class="red">
+		The user will be able to view, respond to questions, All Statuses should be shown here except Complete
+	</div>
+	<table>
+		<tr><th>Project Name</th><th>Type</th><th>Created</th><th>Estimated Date</th></tr>
+		<tr><td>XXX</td><td>XX</td><td>XX-XX-XXXX</td><td>XX-XX-XXXX</td></tr>
+		<tr><td>XXX</td><td>XX</td><td>XX-XX-XXXX</td><td>XX-XX-XXXX</td></tr>
+		<tr><td>XXX</td><td>XX</td><td>XX-XX-XXXX</td><td>XX-XX-XXXX</td></tr>
+	</table>
+
+	<h2>Need Action</h2>
+	<table>
+		<tr><th>Project Name</th><th>Action</th></tr>
+		<tr><td>XXX</td><td>Ready for Review</td></tr>
+		<tr><td>XXX</td><td>Respond to Question(s)</td></tr>
+		<tr><td>XXX</td><td>Respond to Arbitration</td></tr>
+	</table>
+
+	<h2>Create Project</h2>
+
+	<div class="red">
+		After submitting the form to create project the user will be directed to a Project Wizard page that allows them to answer more questions.
+	</div>
+
+	<div class="help">Enter what type of project you would like to create and you will be directed to a screen to answer more questions</div>
+
+	<fieldset>
+
+		<legend>New Project</legend>
+
+		<div class='text midsize'>
+				<label>Project Name</label>
+				<input type='text' name='project-name' value=''
+					ng-model='project.name' />
+		</div>
+
+		<div class='dropdown'>
+				<label>Project Type</label>
+				<select name='project-type' value=''
+					ng-model='project.projecttype' />
+		</div>
+
+	</fieldset>
+
+	<h2>Completed Projects</h2>
+
+	<table>
+		<tr><th>Project Name</th><th>Completion Date</th></tr>
+		<tr><td>XXX</td><td>XX-XX-XXXX</td></tr>
+		<tr><td>XXX</td><td>XX-XX-XXXX</td></tr>
+		<tr><td>XXX</td><td>XX-XX-XXXX</td></tr>
+	</table>
+
+	<h2>Search Projects</h2>
+
+	<div class="red">We might put this off for now.  Too much work.  The user might want to search into the depths of the project.  Which writer did they use?
+	Does any job in the project contain the word XXX.  It might be as simple right now as to search by Name, Type, Status</div>
+
+
+</article>	
