@@ -3,37 +3,36 @@ var encryption = require('../security/encryption'),
 	mongoose = require('mongoose'),
 	mysql = require('mysql'),
 	MySQLManager = require('./mysql-manager'),
+	_ = require('underscore'),
 	$q = require('q');
 
 
 
 mongoose.connect('mongodb://localhost/test');
 
-// var mysqlConnection = mysql.createConnection({
-// 	host: 'localhost',
-// 	user: '',
-// 	password: '',
-// 	database: 'test',
-
-// 	connectTimeout: 5000
-// })
-
-var mysqlConnection = mysql.createConnection({
-	host: '181.224.136.124',
-	user: 'bigsexyw_bswdb',
-	password: 'CL@w642b',
-	database: 'bigsexyw_bswdb',
-
-	insecureAuth: true,
-
-	connectTimeout: 5000
-})
-
-// mysqlConnection.connect();
-
 function passwordValidation(password, done){
 	console.log('validating password', password);
 	return done(true);
+}
+
+function getSocialEmail(socialUser){
+	var identity = socialUser.identity,
+		provider = identity.provider,
+		email = '';
+
+	console.log('finding social email', identity, provider, email, ' =--=')
+
+	if ( ['linkedin', 'facebook', 'twitter'].indexOf(provider) != -1 ) {
+		var verifiedEmails = _.findWhere(identity.emails, { is_verified: true });
+
+		email = verifiedEmails ? 
+			_.first(verifiedEmails).value
+			: _.first(identity.emails).value ;
+	}
+
+	console.log('found', email, '==--=')
+
+	return email;
 }
 
 exports.Schema = new (mongoose.Schema)({
@@ -88,7 +87,7 @@ exports.all = function(){
 			}
 		})
 
-	// MySQLManager.selectModel('USERS', {})
+	// MySQLManager.selectModel('Users', {})
 	// 	.then(fetchUsers.resolve, fetchUsers.reject);
 
 	fetchUsers.promise
@@ -142,7 +141,10 @@ exports.createFromConnectionToken = function(connectionToken){
 }
 
 exports.createFromSocialUser = function(socialUser) {
-	var bswUser = {};
+	var socialEmail = getSocialEmail(socialUser),
+		bswUser = {
+			email: socialEmail
+		};
 
 	bswUser[socialUser.identity.provider + 'Token'] = socialUser.user_token;
 
