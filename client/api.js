@@ -42,6 +42,11 @@ clientModule.config(function main($routeProvider, $locationProvider, $httpProvid
         templateUrl: '/markup/pages/registration.html'
     });
 
+    $routeProvider.when('/userprofile', {
+        controller: 'userprofileController',
+        templateUrl: '/markup/pages/userprofile.html'
+    });
+
     $routeProvider.otherwise({ redirectTo: '/' });
 
 });

@@ -1,12 +1,2 @@
-html,
-body {
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0px;
-  margin: 0px;
-  overflow: auto;
-}
-.red {
-  color: red;
-}
+html,body{width:100%;height:100%;border:0;padding:0;margin:0;overflow:auto}.red{color:red}fieldset.fieldset{display:inline-block;padding:10px;margin-right:10px;margin-bottom:3px;vertical-align:top}div.label-textbox{clear:both;margin-bottom:5px}div.label-textbox .longText{width:250px}div.label-textbox .shortText{width:100px}div.label-textbox .multipleSelect{width:150px;margin-top:10px}div.label-textbox label.label2,div.label-textbox label.label3,div.label-textbox label.label4,div.label-textbox label.label5,div.label-textbox label.label6,div.label-textbox label.label7{float:left;display:block;text-align:right;padding-right:5px;padding-top:3px;font-weight:400}div.label-textbox label.label2{width:100px}div.label-textbox div.img-options{display:inline-block}div.label-textbox.required:after{content:"*"}div.rating{unicode-bidi:bidi-override;direction:rtl}div.rating>span{display:inline-block;position:relative;width:1.1em}div.rating>span:hover:before,div.rating>span:hover~span:before{content:"\2605";position:absolute}
+/* This beautiful CSS-File has been crafted with LESS (lesscss.org) and compiled by simpLESS (wearekiss.com/simpless) */
