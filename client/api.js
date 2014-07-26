@@ -3,8 +3,8 @@ var moduleName = 'bigSexyWords',
 	applicationModules = _.map(['controllers', 'directives', 'filters', 'services'], function (name) {
 	    return "bigSexyWords." + name;
 	}), 
-	vendorDependencies = [], 
-	// vendorDependencies = ['ui.select2', 'ui.bootstrap'], 
+	// vendorDependencies = [], 
+	vendorDependencies = ['ui.select2', 'textAngular', 'ngGrid'], 
 	angularDependencies = ['ngRoute'], 
 	externalDependencies = angularDependencies.concat(vendorDependencies), 
 	allDependencies = applicationModules.concat(externalDependencies);
@@ -42,9 +42,9 @@ clientModule.config(function main($routeProvider, $locationProvider, $httpProvid
         templateUrl: '/markup/pages/registration.html'
     });
 
-    $routeProvider.when('/userprofile', {
-        controller: 'userprofileController',
-        templateUrl: '/markup/pages/userprofile.html'
+    $routeProvider.when('/user-profile', {
+        controller: 'userProfileController',
+        templateUrl: '/markup/pages/user-profile.html'
     });
 
     $routeProvider.otherwise({ redirectTo: '/' });

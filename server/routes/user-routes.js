@@ -24,4 +24,13 @@ exports.attachAllRoutes = function(application){
             })
     })
 
+    application.get('/user-ratings', function(request, response){
+    	response.send([
+			{ stars: '0', comments: 'item 1', date: new Date() },
+			{ stars: '4', comments: 'numero 2', date: new Date() },
+			{ stars: '2', comments: '', date: new Date() },
+			{ stars: '5', comments: '', date: new Date() },
+		])
+    })
+
 }

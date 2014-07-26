@@ -20,7 +20,7 @@ function getSocialEmail(socialUser){
 		provider = identity.provider,
 		email = '';
 
-	console.log('finding social email', identity, provider, email, ' =--=')
+	// console.log('finding social email', identity, provider, email, ' =--=')
 
 	if ( ['linkedin', 'facebook', 'twitter'].indexOf(provider) != -1 ) {
 		var verifiedEmails = _.findWhere(identity.emails, { is_verified: true });

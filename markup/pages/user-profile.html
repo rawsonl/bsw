@@ -1,0 +1,169 @@
+<article id='user-profile'>
+
+    <script type="text/javascript">
+		// $(document).ready(function(){
+		//   	$("#industrySelect").select2({
+		//     	placeholder: "Select Industries",
+		//     	multiple:true,
+		//     	ajax: { 
+		//       		//url: "industrylist.php",
+		//       		dataType: 'json',
+		//       		quietMillis: 100,
+		//       		data: function (term, page) {
+		//         		return {
+		//           			term: term,
+		//           			page_limit: 10
+		//         		};
+		//      		},
+		//       		results: function (data, page) {
+		//         		return { results: data.results };
+		//       		},
+		//       		initSelection: function (element, callback) {
+		//             	return $.getJSON("industrylist.php?id=" + (element.val()), null, function(data) {
+		//                  	return callback(data);
+		//             	});
+		//         	}            
+		//     	}
+		//   	});
+		//   	$("#industrySelect").on("change", function(ev) { 
+		// 		var choice;
+		//         var values = ev.val;
+		//         // This is assuming the value will be an array of strings.
+		//         // Convert to a comma-delimited string to set the value.
+		//         if (values !== null && values.length > 0) {
+		//             for (var i = 0; i < values.length; i++) {
+		//                 if (typeof choice !== 'undefined') {
+		//                     //choice += ",";
+		//                     choice = values[i];
+		//                 }
+		//                 else {
+		//                     choice = values[i];
+		//                 }
+		//             }
+		//         }
+		// 		if (ev.added) {
+		//   	  		updateW("INSERT INTO userindustries (industryid, userid) VALUES (" + choice + "," + userId + ")");
+		// 	 		//console.log("added choice " + choice);
+		//        	}
+		//   	});
+		// 	$("#industrySelect").on("select2-removed", function(e) {
+		// 		updateW("DELETE FROM userindustries WHERE industryid = " + e.val + " AND userid = " + userId);
+		//        	//console.log("removed val=" + e.val + " choice=" + e.choice.text);
+		// 	})
+		//   	//$("#industrySelect").select2("enable", false);
+		//   	var initData={results: []};
+		//   	initData.results.push({id: 1, text: "Legal"});
+		//   	initData.results.push({id: 2, text: "Real Estate"});
+
+		//   	$("#industrySelect").select2("data",initData);
+		// });
+	</script>
+
+	<h6>user profile</h6>
+
+	<fieldset class="fieldset">
+
+		<legend>User Information</legend>
+
+		<div class="label-textbox required">
+	    	<label class="label2">Full Name</label>
+	    	<input class="longText" type='text' name='full-name' value=''
+						ng-model='user.fullname' />
+	    </div>
+
+		<div class="label-textbox required">
+	    	<label class="label2">Email</label>
+	    	<input class="longText" type='text' name='email' value=''
+						ng-model='user.email' />
+	    </div>
+
+		<div class="label-textbox required">
+	    	<label class="label2">Password</label>
+	    	<input class="shortText" type='password' name='password' value=''
+						ng-model='user.password' />
+	    </div>
+
+		<div class="label-textbox required">
+	    	<label class="label2">Display Name</label>
+	    	<input class="shortText" type='text' name='display-name' value=''
+						ng-model='user.displayname' />
+	    </div>
+
+		<div class="label-textbox">
+	    	<label class="label2">Biography</label>
+	    	<!-- <textarea name='biography' value=''
+						ng-model='user.biography' /> -->
+
+
+			<text-angular 
+				ng-model='profile.biography'>
+			</text-angular>
+	    </div>
+
+	    <div class="label-textbox">
+	    	<label class="label2">Picture</label>
+	    	<div class='img-options'>
+		    	<img src="" height="100" width="100"/>
+		    	<div class='radio-group'>
+					<div class='radio-option'>
+						<input type='radio' name='' value='keep'
+							 />
+						<label>Keep</label>
+						<input type='radio' name='' value='remove'
+							 />
+						<label>Remove</label>
+						<input type='radio' name='' value='replace'
+							 />
+						<label>Replace</label>
+					</div>
+				</div>
+		    	<button ng-click=''>Choose File</button>
+			</div>
+	    </div>
+
+	</fieldset>
+
+
+	<div style="display:inline-block">
+
+		<div style="display:block">
+
+			<fieldset class="fieldset">
+
+				<legend>Industries</legend>
+
+		    	<input type="hidden" id="industrySelect" value="2" name="industrySelect" ng-model="user.industries" style="width:300px;"/>
+				
+			</fieldset>
+
+		</div>
+
+		<div style="display:block">
+
+			<fieldset class="fieldset">
+
+				<legend>User Ratings</legend>
+
+				<div class="rating">
+					<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+				</div>
+
+				<table>
+					<tr><th>Stars</th><th>Comments</th><th>Date/Time</th></tr>
+					<tr><td>XXX</td><td>XX</td><td>XX-XX-XXXX</td></tr>
+					<tr><td>XXX</td><td>XX</td><td>XX-XX-XXXX</td></tr>
+					<tr><td>XXX</td><td>XX</td><td>XX-XX-XXXX</td></tr>
+				</table>
+
+			</fieldset>
+
+		</div>
+
+		<div class='user-ratings-grid'
+			ng-grid='profile.userRatingsGrid'>
+
+		</div>
+
+	</div>
+
+</article>
